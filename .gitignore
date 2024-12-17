@@ -1,4 +1,4 @@
-dist
+**/dist
 cdn-dist
-node_modules
+**/node_modules
 examples/qyt-yasidao
