@@ -1,0 +1,34 @@
+{
+    "name": "tci18n",
+    "version": "0.1.0",
+    "description": "",
+    "scripts": {
+        "test": "jest",
+        "build:cli": "cross-env NODE_ENV=cli pnpm --filter build build",
+        "build:core": "cross-env NODE_ENV=core pnpm --filter build build",
+        "build:vue2": "cross-env NODE_ENV=vue2 pnpm --filter build build",
+        "build:vue3": "cross-env NODE_ENV=vue3 pnpm --filter build build",
+        "build:react": "cross-env NODE_ENV=react pnpm --filter build build",
+        "build:intl": "cross-env NODE_ENV=intl pnpm --filter build build",
+        "build:share": "cross-env NODE_ENV=share pnpm --filter build build",
+        "build:tci18nPlugin": "cross-env NODE_ENV=tci18nPlugin pnpm --filter build build",
+        "build:mini": "cross-env NODE_ENV=mini pnpm --filter build build"
+    },
+    "author": "",
+    "license": "MIT",
+    "bin": {
+        "tci18n": "./bin/index.js"
+    },
+    "jest": {
+        "testEnvironment": "node"
+    },
+    "devDependencies": {
+        "@changesets/cli": "^2.26.2",
+        "cross-env": "^7.0.3",
+        "eslint-config-airbnb-base": "^14.1.0"
+    },
+    "dependencies": {
+        "ts-node": "^10.9.1",
+        "tsconfig-paths": "^4.2.0"
+    }
+}

@@ -1,0 +1,25 @@
+##    新增编辑页面
+
+<el-dialog id="newEditDialog" title="新增航线屏蔽" :visible.sync="dialogFormVisible" width="80%" :before-close="cancel"
+           :close-on-press-escape="true" :close-on-click-modal="false">
+    <el-form :model="currentForm" size="small" ref="currentForm" label-width="110px" :rules="rules">
+        <el-form-item label="资源类型" prop="resourceType">
+            ##            <vue-checkbox v-model="currentForm.resourceType" :options="resourceTypes"></vue-checkbox>
+            <el-checkbox-group v-model="currentForm.resourceType">
+                <el-checkbox :label="item.value" v-for="item in resourceTypes">{{item.text}}</el-checkbox>
+            </el-checkbox-group>
+        </el-form-item>
+        <el-form-item label="GDS" prop="gds">
+            <vue-checkbox v-model="currentForm.gds" :options="gdsCodes"></vue-checkbox>
+        </el-form-item>
+    </el-form>
+
+
+    <div slot="footer" class="dialog-footer">
+        <el-button type="primary green_button" size="mini" plain icon="el-icon-check" @click="confirm('currentForm')">
+            {{$t('保存')}}
+        </el-button>
+        <el-button size="mini" type="primary gray_button" plain icon="el-icon-close" @click="cancel">{{$t('关闭')}}
+        </el-button>
+    </div>
+</el-dialog>

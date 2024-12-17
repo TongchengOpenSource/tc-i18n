@@ -1,0 +1,61 @@
+<div id="otherDetail" class="portlet portlet-sortable box blue">
+    <div class="portlet-title ui-sortable-handle">
+        <div class="caption">
+            <i class="icon-puzzle font-black-sunglo"></i>
+            <span class="caption-subject font-black-sunglo bold uppercase">{{$t('其他信息#!!!#vm.vm_1')}}</span>
+            <span class="caption-helper"></span>
+        </div>
+        <div class="tools">
+            <a class="collapse" href=""></a>
+            <a class="fullscreen" href=""></a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="tabbable">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#rule4C" data-toggle="tab">{{$t('退改规(对客)#!!!#vm.vm_1')}}</a>
+                </li>
+                <li>
+                    <a href="#rule4M" data-toggle="tab">{{$t('退改规(对供应)#!!!#vm.vm_1')}}</a>
+                </li>
+                <li>
+                    <a href="#post" data-toggle="tab" onclick="queryPost()">{{$t('邮寄信息#!!!#vm.vm_1')}}</a>
+                </li>
+                <li>
+                    <a href="#changelog" data-toggle="tab">{{$t('变更记录#!!!#vm.vm_1')}}</a>
+                </li>
+            </ul>
+            <div class="tab-content no-space">
+                <div class="tab-pane active" id="rule4C">
+                    <!-- 退改签规定对客 Begin -->
+                    #parse("page/order/info/ruleDetail4C.vm")
+                    <!-- 退改签规定对客 End -->
+                </div>
+                <div class="tab-pane" id="rule4M">
+                    <!-- 退改签规定对供应 Begin -->
+                    #parse("page/order/info/ruleDetail4M.vm")
+                    <!-- 退改签规定对供应 End -->
+                </div>
+                <div class="tab-pane" id="post">
+                    <!-- 邮寄信息 Begin -->
+                    #parse("page/order/info/postDetail.vm")
+                    <!-- 邮寄信息 End -->
+                </div>
+                <div class="tab-pane" id="changelog">
+                    <!-- 变更记录 Begin -->
+                    #parse("page/order/info/changelog.vm")
+                    <!-- 变更记录 End -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var queryPost = function () {
+        post_detail_vm.loadPostList();
+    }
+    new Vue({
+        el: '#otherDetail'
+    })
+</script>

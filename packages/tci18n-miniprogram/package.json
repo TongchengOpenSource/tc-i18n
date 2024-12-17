@@ -1,0 +1,20 @@
+{
+  "name": "@tc-i18n/miniprogram",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [],
+  "author": "tclxjiaxing-huang",
+  "license": "ISC"
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@tc-i18n/vue2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./global.d.ts",
+  "exports": {
+    ".": {
+      "types": "./global.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "index.ts",
+    "global.d.ts"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "tclxjiaxing-huang",
+  "license": "ISC",
+  "dependencies": {
+    "@tc-i18n/intl": "workspace:^"
+  }
+}

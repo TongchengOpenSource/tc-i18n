@@ -1,0 +1,32 @@
+{
+  "name": "@tc-i18n/cli",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+    "tci18n": "./bin/index.js"
+  },
+  "main": "./dist/index.cjs",
+  "scripts": {
+    "init": "node -r ts-node/register -r tsconfig-paths/register ./cli.ts init"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [],
+  "author": "tclxjiaxing-huang",
+  "license": "ISC",
+  "dependencies": {
+    "@tc-i18n/core": "workspace:^",
+    "axios": "1.5.0",
+    "glob": "8.1.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^8.1.0",
+    "@types/glob": "^8.1.0",
+    "@types/inquirer": "^6.0.2",
+    "chalk": "^4.1.2",
+    "commander": "^6.2.0",
+    "fs-extra": "^8.1.0",
+    "inquirer": "^6.5.2"
+  }
+}

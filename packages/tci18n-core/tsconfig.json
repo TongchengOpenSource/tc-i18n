@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "target": "ES2019",
+        "module": "NodeNext",
+        "outDir": "./dist",
+        "strict": true,
+        "esModuleInterop": true,
+        "composite": true,
+        "moduleResolution": "NodeNext",
+        "lib": [
+            "ESNext",
+            "DOM"
+        ],
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "baseUrl": ".",
+        "paths": {
+            "types/*": ["types/*"],
+            "src": ["src/*"],
+            "parse5": ["plugins/parse5/index.js"],
+            "parse5/*": ["plugins/parse5/*"],
+            "parse5/serializer": ["plugins/parse5/serializer/index.js"],
+            "notify": ["plugins/notify/index.ts"],
+        }
+    },
+    "exclude": ["node_modules", "dist"],
+}

@@ -1,0 +1,233 @@
+
+@{
+    ViewBag.Title = "出勤汇总";
+    Layout = "~/Views/Shared/_Layout_safish.cshtml";
+}
+<style>
+    #Attendance > thead > tr > th {
+        text-align: center;
+        min-width: 100px;
+    }
+
+    #Attendance > tbody > tr > td {
+        text-align: center;
+        min-width: 100px;
+    }
+
+    panel-u {
+        margin: 0px 20px;
+    }
+
+    form[fluid] form-group > label {
+        width: 140px;
+    }
+</style>
+<div class="container" id="list" v-cloak>
+    <ul class="sf-crumbs">
+        <li>主管自助</li>
+        <li>出勤汇总</li>
+    </ul>
+    <panel-u>
+        <sf-condition-box height="39" foldable>
+            <form fluid>
+                <form-group>
+                    <label>按时间搜索：</label>
+                    <sa-input class="w-100">
+                        <sa-datepicker v-model="startDate" v-bind:end="endDate"></sa-datepicker>
+                    </sa-input>
+                    ~
+                    <sa-input class="w-100">
+                        <sa-datepicker v-model="endDate" v-bind:start="startDate"></sa-datepicker>
+                    </sa-input>
+                </form-group>
+                <form-group class="w-120 ml-15">
+                    <sa-input searchable remote v-on:search="searchHandler" placeholder="请输入工号或姓名">
+                        <sa-select remote v-bind:data="StaffList" v-model="empId" value-key="EmployeeID">
+                            <template scope="item">
+                                {{item.EmpName}} {{item.EmployeeCode}}
+                            </template>
+                        </sa-select>
+                    </sa-input>
+                </form-group>
+                <form-group class="w-200 ml-25">
+                    <sa-input class="w-180" placeholder="请选择部门" searchable>
+                        <sa-tree-select v-bind:data="departMentList" v-model="seldepartid" value-key="id" mode="separate" multiple>
+                        </sa-tree-select>
+                    </sa-input>
+                </form-group>
+                <form-group class="w-200">
+                    <button slot="corner" type="button" v-on:click="updateList(true)" class="mr-15"><i class="fa fa-search"></i> 查询</button>
+                    <button slot="corner" type="button" v-on:click="refresh()" class="mr-15"><i class="fa fa-remove"></i> 重置</button>
+                </form-group>
+            </form>
+        </sf-condition-box>
+    </panel-u>
+    <panel-u style="padding:0px;" v-spinner="loading" data-timestart="0">
+        <div style="overflow-x:auto;">
+            <table border id="Attendance">
+                <thead>
+                    <tr>
+                        <th colspan="5">人员信息</th>
+                        <th colspan="4">实际出勤</th>
+                        <th colspan="3">计划出勤</th>
+                    </tr>
+                    <tr>
+                        <th rowspan="2" style="min-width:110px;">员工</th>
+                        <th rowspan="2">部门</th>
+                        <th rowspan="2">出勤日期</th>
+                        <th rowspan="2">周核区间</th>
+                        <th rowspan="2">出勤类型</th>
+                        <th rowspan="2">开始时间</th>
+                        <th rowspan="2">结束时间</th>
+                        <th rowspan="2">工时</th>
+                        <th rowspan="2">核算工时</th>
+                        <th rowspan="2">开始时间</th>
+                        <th rowspan="2">结束时间</th>
+                        <th rowspan="2">工时</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in tabledata">
+                        <td>{{item.EmployeeName+item.EmployeeCode}}</td>
+                        <td>{{item.DepartmentName}}</td>
+                        <td>{{item.AttendanceDate}}</td>
+                        <td>{{item.WeekAccountRange}}</td>
+                        <td>{{item.AttendancelTypeID}}</td>
+                        <td>{{item.AttendanceStartTime}}</td>
+                        <td>{{item.AttendanceEndTime}}</td>
+                        <td>{{item.AttendanceHours}}</td>
+                        <td>{{item.AccountingHours}}</td>
+                        <td>{{item.WorkStartTime}}</td>
+                        <td>{{item.WorkEndTime}}</td>
+                        <td>{{item.WorkHours}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </panel-u>
+    <div v-if="total>limit">
+        <sf-pagination v-bind:total="total" v-bind:page-size="limit" class="sf-mt10 sf-mr15" v-model="vattpage" v-on:input="updateList(false)"></sf-pagination>
+    </div>
+</div>
+<script type="text/javascript">
+    var formVue = new Vue({
+        el: "#list",
+        data: {
+            tabledata: [],
+            StaffList: [],
+            startDate: "",
+            endDate: "",
+            empId: 0,
+            seldepartid: [],
+            departMentList: [],
+            loading: true,
+            vattpage: 1, // 分页页码
+            total: 0, // 数据总数
+            limit: 10, // 每页的数据量
+            vstrDate: "",
+            result: []
+        },
+        methods: {
+            searchHandler: function (text) {
+                formVue.StaffList = [];
+                if (text != "") {
+                    $.ajax({
+                        url: urlPrefix + "EmployeeBase/GetEmpList",
+                        type: 'post',
+                        data: { codeorname: text },
+                        dataType: 'json'
+                    }).then(function (result) {
+                        if (result) {
+                            formVue.StaffList = result;
+                        }
+                    })
+                }
+            },
+            updateList: function (v) {
+                formVue.loading = true;
+                if (v)
+                    this.vattpage = 1;
+                $.ajax({
+                    type: "post",//, int pageIndex = 0, int pageSize = 0
+                    url: urlPrefix + "AttendanceReport/GetEmpCollectList",
+                    data: { empId: this.empId, departmentList: this.seldepartid, strDate: this.startDate, endDate: this.endDate, pageIndex: this.vattpage, pageSize: this.limit },
+                    success: function (result) {
+                        formVue.tabledata = [];
+                        formVue.total = 0;
+                        if (result.Message)
+                            formVue.$toast(result.Message, 'warn');
+                        if (result.ReturnValue && result.Success) {
+                            formVue.tabledata = result.ReturnValue;
+                            formVue.total = result.Total;
+                            var npage = Math.ceil(formVue.total / formVue.limit);
+                            if (npage < formVue.page) {
+                                formVue.page = npage;
+                            }
+                        }
+                        formVue.loading = false;
+                    }.bind(formVue)
+                });
+            },
+            refresh: function () {
+                this.empId = 0;
+                this.seldepartid = [];
+                this.loading = true;
+                var date_ = new Date();
+                var year = date_.getFullYear();
+                var month = date_.getMonth() + 1;
+                if (month > 6)
+                    this.vstrDate = year + '-' + (month - 5) + '-01';
+                else if (month == 6)
+                    this.vstrDate = year + '-01-01';
+                else
+                    this.vstrDate = (year - 1) + '-' + (month + 6) + '-01';
+                var firstdate = year + '-' + month + '-01';
+                var day = new Date(year, month, 0);
+                var lastdate = year + '-' + month + '-' + day.getDate();
+                this.startDate = firstdate;
+                this.endDate = lastdate;
+                this.vattpage = 1;
+                $.ajax({
+                    type: "post",//, int pageIndex = 0, int pageSize = 0
+                    url: urlPrefix + "AttendanceReport/GetEmpCollectList",
+                    data: { empId: this.empId, departmentList: this.seldepartid, strDate: this.startDate, endDate: this.endDate, pageIndex: this.vattpage, pageSize: this.limit },
+                    success: function (result) {
+                        formVue.tabledata = [];
+                        formVue.total = 0;
+                        if (result.ReturnValue && result.Success) {
+                            formVue.tabledata = result.ReturnValue;
+                            formVue.total = result.Total;
+                            var npage = Math.ceil(formVue.total / formVue.limit);
+                            if (npage < formVue.page) {
+                                formVue.page = npage;
+                            }
+                        }
+                        formVue.loading = false;
+                    }.bind(formVue)
+                });
+                $.ajax({
+                    type: "get",//, int pageIndex = 0, int pageSize = 0
+                    url: urlPrefix + "AttendanceReport/GetDepartMentList",
+                    success: function (result) {
+                        //this.departMentList = [{ id: 0, text: '', children: [] }];
+                        this.departMentList = [];
+                        if (result) {
+                            this.departMentList = result;
+                        }
+                    }.bind(this)
+                });
+            },
+            alertmsg: function (content) {
+                this.$alert(content)
+            }
+        },
+        activated: function () {//生命周期：激活，和created同时进行，调用keepalive时使用
+            this.refresh();
+        },
+        created: function () {//生命周期：创建
+            this.refresh();
+        }
+    });
+</script>
+
+

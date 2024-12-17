@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "ES2019",
+        "module": "ESNext",
+        "outDir": "./dist",
+        "strict": true,
+        "esModuleInterop": true,
+        "composite": true,
+        "moduleResolution": "Node",
+        "lib": [
+            "ESNext",
+            "DOM"
+        ],
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "baseUrl": ".",
+    },
+    "exclude": ["node_modules", "dist"],
+}

@@ -1,0 +1,61 @@
+#set($layout="layout/iframe.vm")
+<style>
+    .standard-input .el-form-item__content {
+        width: 100%;
+        padding-left: 100px;
+    }
+
+    .el-date-editor--daterange.el-input, .el-date-editor--daterange.el-input__inner, .el-date-editor--timerange.el-input, .el-date-editor--timerange.el-input__inner {
+        width: 100%;
+    }
+</style>
+<el-dialog id="newReqConfigDialog" title="航班过滤维护" :visible.sync="dialogFormVisible"
+           top="50px" width="750px" :before-close="abolish" :close-on-click-modal="false">
+    <el-form :model="currentForm" size="small" ref="currentForm" label-width="120px" :rules="rules">
+
+        <el-form-item label="过滤类型" prop="filterType">
+            <vue-select :options="filterTypeList" v-model="currentForm.filterType"
+                        placeholder="请选择过滤类型"></vue-select>
+        </el-form-item>
+        <template v-if="currentForm.filterType=='NEAR_DEPARTURE_TIME'">
+            #parse("page/flightfilter/edit/near_eparture_time.vm")
+        </template>
+        <template v-if="currentForm.filterType=='MCT_TRANSIT_INTERVAL'">
+            #parse("page/flightfilter/edit/mct_transit_interval.vm")
+        </template>
+        <template v-if="currentForm.filterType=='ROUND_TRIP_INTERVAL'">
+            #parse("page/flightfilter/edit/round_trip_interval.vm")
+        </template>
+        <template v-if="currentForm.filterType=='AIRLINE_ALLIANCE'">
+            #parse("page/flightfilter/edit/airline_alliance.vm")
+        </template>
+        <template v-if="currentForm.filterType=='NEAR_DEPARTURE_WHITELIST'">
+            #parse("page/flightfilter/edit/near_departure_whitelist.vm")
+        </template>
+        <template v-if="currentForm.filterType=='FLIGHT_CHANGE'">
+            #parse("page/flightfilter/edit/flight_change.vm")
+        </template>
+
+        <el-form-item label="备注" prop="remark" label-width="120px"
+                      v-if="currentForm.filterType=='MCT_TRANSIT_INTERVAL' || currentForm.filterType=='FLIGHT_CHANGE'">
+            <el-input v-model="currentForm.remark" placeholder="备注信息......." type="textarea"></el-input>
+        </el-form-item>
+
+        <el-form-item label="状态" prop="enable" label-width="120px">
+            <el-radio-group v-model="currentForm.enable">
+                <el-radio :label="1">有效</el-radio>
+                <el-radio :label="2">无效</el-radio>
+            </el-radio-group>
+        </el-form-item>
+
+    </el-form>
+
+
+    <div slot="footer" class="dialog-footer">
+        <el-button :disabled="disableSave" type="primary" size="small" plain icon="el-icon-check"
+                   @click="confirm('currentForm')">
+            保存
+        </el-button>
+        <el-button size="small" plain icon="el-icon-close" @click="cancel('currentForm')">关闭</el-button>
+    </div>
+</el-dialog>

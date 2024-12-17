@@ -1,0 +1,59 @@
+{
+  "name": "@tc-i18n/core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.cjs",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./parse": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/parse.mjs",
+      "require": "./dist/parse.cjs"
+    }
+  },
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "test": "mocha __tests__/**/vue.test.ts --require ts-node/register -r tsconfig-paths/register"
+  },
+  "files": [
+    "dist",
+    "types",
+    "src"
+  ],
+  "keywords": [],
+  "author": "tclxjiaxing-huang",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "7.18.10",
+    "@babel/preset-env": "7.22.20",
+    "@babel/preset-typescript": "^7.23.0",
+    "prettier": "1.19.1"
+  },
+  "devDependencies": {
+    "@babel/generator": "^7.18.0",
+    "@babel/plugin-proposal-decorators": "^7.24.7",
+    "@babel/plugin-syntax-async-generators": "^7.8.4",
+    "@babel/plugin-syntax-class-properties": "^7.12.13",
+    "@babel/plugin-syntax-do-expressions": "^7.18.6",
+    "@babel/plugin-syntax-function-bind": "^7.18.6",
+    "@babel/plugin-syntax-jsx": "^7.18.6",
+    "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
+    "@babel/traverse": "^7.23.2",
+    "@babel/types": "^7.24.5",
+    "@types/babel__core": "^7.20.5",
+    "@types/babel__generator": "^7.6.8",
+    "@types/babel__preset-env": "^7.9.6",
+    "@types/babel__traverse": "^7.20.5",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.8.3",
+    "@vue/compiler-sfc": "^3.3.4",
+    "de-indent": "^1.0.2",
+    "he": "^1.2.0",
+    "hogan.js": "^3.0.2",
+    "mocha": "^10.4.0"
+  }
+}

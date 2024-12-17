@@ -1,0 +1,31 @@
+{
+  "name": "@tc-i18n/build-plugin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.cjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [],
+  "author": "tclxjiaxing-huang",
+  "license": "ISC",
+  "dependencies": {
+    "@rollup/pluginutils": "^5.1.3",
+    "@tc-i18n/core": "workspace:^",
+    "magic-string": "^0.30.12"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.3",
+    "@types/webpack": "^5.28.5",
+    "minimatch": "7.4.6"
+  }
+}

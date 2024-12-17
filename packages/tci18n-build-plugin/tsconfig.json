@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "ES2019",
+        "module": "nodenext",
+        "outDir": "dist",
+        "strict": true,
+        "esModuleInterop": true,
+        "moduleResolution":"nodenext",
+        "noImplicitAny": false,
+        "resolveJsonModule": true,
+        "declaration": true,
+        "composite": true,
+        "lib": [
+            "ESNext",
+            "DOM",
+        ],
+        "sourceMap": true,
+        "baseUrl": ".",
+        "paths": {}
+    },
+}
