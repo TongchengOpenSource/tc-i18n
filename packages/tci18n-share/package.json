@@ -1,6 +1,6 @@
 {
   "name": "@tc-i18n/share",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "types": "./global.d.ts",
